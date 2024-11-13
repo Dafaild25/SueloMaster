@@ -1,3 +1,45 @@
+function cargarSensores() {
+    const contenedorTablas = document.getElementById('contenedor-tablas');
+    contenedorTablas.innerHTML = ''; // Limpiar el contenedor antes de cargar nuevos datos
+
+    fetch('../vistaSensor')  // Cambia esto por la URL correcta a tu vista
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la red: ' + response.statusText);
+            }
+            return response.text();
+        })
+        .then(html => {
+            contenedorTablas.innerHTML = html;
+
+            const tablaSensores = document.getElementById('tbl-sensores'); // Asegúrate de tener una tabla con este ID en la respuesta
+
+            if (!tablaSensores) {
+                console.error('No se encontró el contenedor de la tabla.');
+                return; 
+            }
+
+            // Inicializa DataTable en la tabla de sensores
+            $('#tbl-sensores').DataTable({
+                language: {
+                    search: "Buscar:",
+                },
+                paging: false,          // Desactiva la paginación
+                ordering: false,        // Desactiva las flechas de ordenamiento
+                info: false,            // Desactiva el texto de información de la tabla
+                scrollX: true,         // Activa el desplazamiento horizontal
+                fixedHeader: true,     // Fija el encabezado y el buscador
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar los sensores:', error);
+        });
+}
+
+
+
+
+
 function registrarSensor() {
     // Obtener los valores del formulario
     const tipo = document.getElementById('tipo').value;

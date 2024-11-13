@@ -30,10 +30,32 @@
                 <input type="datetime-local" class="form-control" id="fecha_instalacion" name="fecha_instalacion" required>
             </div>
             <button type="button" class="btn btn-primary" onclick="registrarSensor()">Registrar Sensor</button>
-        </form>
-    
-    
-    
+        </form>  
 </div>
+
+<table id="tbl-sensores" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Fecha de Instalación</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sensor in sensores %}
+        <tr>
+            <td>{{ sensor.tipo }}</td>
+            <td>{{ sensor.descripcion }}</td>
+            <td>{{ sensor.fecha_instalacion }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No hay sensores registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
 
 {% endblock %}

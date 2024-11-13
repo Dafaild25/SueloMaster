@@ -7,13 +7,10 @@ from ..models import Sensor,Ubicacion
 
 
 def vistaSensor(request):
-    sensor = Sensor.objects.all()  # Elimina la coma para obtener un QuerySet
-    # Combina ambos contextos en un solo diccionario
+    sensor = Sensor.objects.all()  
     context = {
-        'sensor':sensor,
-        
+        'sensor':sensor,    
     }
-    
     return render(request, '../templates/Sensor/vistaSensor.html', context)
 
 

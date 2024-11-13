@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .Views.Navegador_views import vistaNavegador,inicio
 from .Views.Logeo_views import *
-from .Views.Sensor_views import registrarSensor
+from .Views.Sensor_views import registrarSensor,vistaSensor
 
 urlpatterns = [
     path('',inicio, name='inicio'),
@@ -16,5 +16,7 @@ urlpatterns = [
     path('cerrarSesion/',cerrarSesion,name='cerrarSesion'),
     
     # PARA REGISTRAR SENSORES 
+    path('vistaSensor/',vistaSensor,name='vistaSensor'),
     path('registrarSensor/',registrarSensor, name='registrarSensor'),
+    
 ]
