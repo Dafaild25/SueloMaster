@@ -1,0 +1,27 @@
+{% extends 'paginaMaestra.html' %}
+{% load static %}
+<div class="container mt-5">
+    <h2>Formulario de Ubicación</h2>
+    <form action="{% url 'nombre_de_tu_vista' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <textarea class="form-control" id="direccion" name="direccion" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="fecha_creacion" class="form-label">Fecha de Creación</label>
+            <input type="datetime-local" class="form-control" id="fecha_creacion" name="fecha_creacion" value="{{ fecha_creacion|date:'Y-m-d\TH:i' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+{% endblock %}
