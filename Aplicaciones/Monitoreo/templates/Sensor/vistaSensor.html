@@ -1,0 +1,39 @@
+{% extends 'paginaMaestra.html' %}
+{% load static %}
+<div class="container mt-5">
+    <h2>Formulario de Sensores</h2>
+    
+        <form id="formulario-sensor">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo de Sensor</label>
+                <select class="form-select" id="tipo" name="tipo" required>
+                    <option value="TEMPERATURA">Temperatura</option>
+                    <option value="HUMEDAD">Humedad</option>
+                    <option value="ACIDEZ">Acidez</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion">
+            </div>
+            <div class="mb-3">
+                <label for="ubicacion" class="form-label">Ubicación</label>
+                <select class="form-select" id="ubicacion" name="ubicacion" required>
+                    {% for ubicacion in ubicaciones %}
+                        <option value="{{ ubicacion.id }}">{{ ubicacion.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="fecha_instalacion" class="form-label">Fecha de Instalación</label>
+                <input type="datetime-local" class="form-control" id="fecha_instalacion" name="fecha_instalacion" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="registrarSensor()">Registrar Sensor</button>
+        </form>
+    
+    
+    
+</div>
+
+{% endblock %}
