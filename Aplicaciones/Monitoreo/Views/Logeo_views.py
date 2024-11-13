@@ -17,7 +17,7 @@ def registro(request):
             if(registro.is_valid()): # Validar formulario
                 print('valido')
                 registro.save()
-                return render(request,'Navegador/inicio.html') # Redirigir a template 'inicio'
+                return render(request,'Navegador/registro.html') # Redirigir a template 'inicio'
                 messages.success(request,"Usuario registrado exitosamente")
 
     return render(request,'Navegador/registro.html',{
