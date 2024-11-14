@@ -5,6 +5,7 @@ from .Views.Navegador_views import vistaNavegador,inicio
 from .Views.Logeo_views import *
 from .Views.Ubicacion_views import *
 from .Views.Sensor_views import *
+from .Views.Reporte_views import *
 
 urlpatterns = [
     path('',vistaNavegador, name='vistaNavegador'),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('editarSensor/<int:sensor_id>/',editarSensor,name='editarSensor'),
     path('eliminarSensor/<int:sensor_id>/',eliminarSensor,name='eliminarSensor'),
 
+    path('grafica/', vista_estadistica, name='vista_estadistica'),
 ]

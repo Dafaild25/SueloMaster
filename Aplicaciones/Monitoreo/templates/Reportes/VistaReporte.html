@@ -1,0 +1,37 @@
+{% extends 'paginaMaestra.html' %}
+
+{% block body %}
+ 
+<h1>Gráfica Estadística</h1>
+    <canvas id="miGrafica"></canvas>
+
+    <script>
+        const ctx = document.getElementById('miGrafica').getContext('2d');
+
+        // Datos enviados desde Django
+        const labels = {{ labels|safe }};
+        const data = {{ data|safe }};
+
+        // Configuración de Chart.js
+        const miGrafica = new Chart(ctx, {
+            type: 'bar', // tipo de gráfica (puede ser 'line', 'pie', 'doughnut', etc.)
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Datos de Ejemplo',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock%}

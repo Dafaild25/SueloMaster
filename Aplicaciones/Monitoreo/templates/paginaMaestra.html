@@ -45,6 +45,8 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="{% static 'plantilla/css/bootstrap.min.css' %}" />
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 
@@ -58,11 +60,12 @@
             </div>
         </div>
         
-        
+    <div class="container">
+        {% block body %}
+            
+        {% endblock %}
 
-    {% block body %}
-        
-    {% endblock %}
+    </div>
     <br><br><br><br><br><br><br><br><br>
     <!-- footer -->
     <footer class="footer mt-auto py-3 bg-dark text-white">
