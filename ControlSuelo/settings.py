@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p2!e*w0(6y0-sxw7-*!5p+wzi$ntp$1vyxo3^7%od+60k&vym=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.85.108.212','localhost']
 
 
 # Application definition
@@ -120,6 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS= (os.path.join(BASE_DIR,'ControlSuelo/static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'EmpresaMaster/media')
