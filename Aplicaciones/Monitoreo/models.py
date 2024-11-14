@@ -3,9 +3,9 @@ from django.db import models
 # Modelo para Ubicaciones
 class Ubicacion(models.Model):
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(null=True, blank=True)
-    direccion = models.TextField(null=True, blank=True)
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    descripcion = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    fecha_creacion = models.DateField()
 
     def __str__(self):
         return self.nombre
@@ -21,7 +21,7 @@ class Sensor(models.Model):
     tipo = models.CharField(max_length=12, choices=TIPOS_SENSORES)
     descripcion = models.CharField(max_length=200, null=True, blank=True)
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, related_name='sensores')
-    fecha_instalacion = models.DateTimeField(auto_now_add=True)
+    fecha_instalacion = models.DateField()
 
     def __str__(self):
         return f"{self.get_tipo_display()} - {self.ubicacion.nombre}"

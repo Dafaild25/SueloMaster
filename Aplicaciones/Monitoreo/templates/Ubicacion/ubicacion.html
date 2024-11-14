@@ -1,0 +1,173 @@
+
+<div class="container">
+    <h1 class="mt-4">Lista de Ubicaciones</h1>
+    <div class="row mb-3">
+        <div class="col-6">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarUbicacion">
+                Agregar Nuevo
+            </button>
+        </div>
+        <div class="col-6 text-end">
+            {% comment %} <button type="button" class="btn btn-outline-primary">Importar</button> {% endcomment %}
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="tbl-ubicacion">
+            <thead class="table-dark">
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Descripcion</th>
+                    <th>fecha_creacion</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ubicacion in ubicaciones %}
+                <tr>
+                    <td>{{ forloop.counter }}</td> <!-- Número de Enumeración -->
+                    <td><p class="text-small small">{{ ubicacion.nombre }}</p></td>
+                    <td><p class="text-small small">{{ ubicacion.direccion }}</p></td>
+                    <td><p class="text-small small">{{ ubicacion.descripcion }}</p></td>
+                    <td><p class="text-small small">{{ ubicacion.fecha_creacion }}</p></td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-primary btn-icon" onclick="abrirModalVerUbicacion({{ubicacion.id}});">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline-danger btn-icon" onclick="eliminarUbicacion({{ubicacion.id}});">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No hay ubicaciones registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Modal para agregar empleado -->
+<div class="modal fade" id="modalAgregarUbicacion" tabindex="-1" aria-labelledby="modalAgregarUbicacionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAgregarUbicacionLabel">Agregar Ubicacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarUbicacion" enctype="multipart/form-data">
+                    {% csrf_token %}
+                                   
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control">
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="direccion">Dirección:</label>
+                            <textarea name="direccion" id="direccion" class="form-control"></textarea>
+                        </div>
+                    </div>
+                
+                    <!-- Campo para la Fecha -->
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="fecha_creacion">Fecha de Creación:</label>
+                            <input type="date" name="fecha_creacion" id="fecha_creacion" class="form-control">
+                        </div>
+                    </div>
+                
+                    <br>
+                
+                    <br>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary" onclick="guardarDatosUbicacion();">Agregar Empleado</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para seleccionar y visualizar empleado -->
+<div class="modal fade" id="modalVerUbicacion" tabindex="-1" aria-labelledby="modalVerUbicacionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalVerUbicacionLabel">Ubicacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <form id="formEditarUbicacion" enctype="multipart/form-data">
+                    <input type="hidden" id="verId" name="id">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label ><Strong>NOMBRE:</Strong></label>
+                                <input type="text" class="form-control" id="verNombre" name="nombre" >
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label ><strong>DIRECCION:</strong></label>
+                                <textarea type="text" class="form-control" id="verDireccion" name="direccion" ></textarea>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label ><strong>DESCRIPCION:</strong></label>
+                                    <textarea class="form-control" id="verDescripcion" name="descripcion" ></textarea>
+                                </div>
+                            </div>
+                    
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label ><strong>Fecha_Creacion:</strong></label>
+                                    <input type="date" class="form-control" id="verFechaCreacion" name="fecha_creacion" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarDatosEditadosUbicacion()">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

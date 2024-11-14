@@ -1,0 +1,194 @@
+
+<div class="container">
+    <h1 class="mt-4">Lista de Sensores</h1>
+    <div class="row mb-3">
+        <div class="col-6">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarSensor">
+                Agregar Nuevo
+            </button>
+        </div>
+        <div class="col-6 text-end">
+            {% comment %} <button type="button" class="btn btn-outline-primary">Importar</button> {% endcomment %}
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="tbl-sensor">
+            <thead class="table-dark">
+                <tr>
+                    <th>N°</th>
+                    <th>Tipo</th>
+                    <th>Descripcion</th>
+                    <th>Ubicacion</th>
+                    <th>fecha_instalacion</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sensor in sensores %}
+                <tr>
+                    <td>{{ forloop.counter }}</td> <!-- Número de Enumeración -->
+                    <td><p class="text-small small">{{ sensor.tipo }}</p></td>
+                    <td><p class="text-small small">{{ sensor.descripcion }}</p></td>
+                    <td><p class="text-small small">{{ sensor.ubicacion }}</p></td>
+                    <td><p class="text-small small">{{ sensor.fecha_instalacion }}</p></td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-primary btn-icon" onclick="abrirModalVerSensores({{sensor.id}});">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline-danger btn-icon" onclick="eliminarSensor({{sensor.id}});">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No hay sensores registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Modal para agregar empleado -->
+<div class="modal fade" id="modalAgregarSensor" tabindex="-1" aria-labelledby="modalAgregarSensorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAgregarSensorLabel">Agregar Sensor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarSensor" enctype="multipart/form-data">
+                    {% csrf_token %}
+                                   
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="tipo" class="form-label">Tipo de Sensor</label>
+                            <select class="form-select" id="tipo" name="tipo" required>
+                                <option value="TEMPERATURA">Temperatura</option>
+                                <option value="HUMEDAD">Humedad</option>
+                                <option value="ACIDEZ">Acidez</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <label><strong>Ubicacion:</strong></label>
+                                <select class="form-control" id="ubicacion" name="ubicacion" required>
+                                    <option value="">Selecciona una ubicacion</option>
+                                    {% for ubicacion in ubicaciones %}
+                                        <option value="{{ ubicacion.id }}">{{ ubicacion.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                
+                    <!-- Campo para la Fecha -->
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="fecha_instalacion">Fecha de instalacion:</label>
+                            <input type="date" name="fecha_instalacion" id="fecha_instalacion" class="form-control">
+                        </div>
+                    </div>
+                
+                    <br>
+                
+                    <br>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary" onclick="guardarDatosSensores();">Agregar Sensor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para seleccionar y visualizar empleado -->
+<div class="modal fade" id="modalVerSensor" tabindex="-1" aria-labelledby="modalVerSensorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalVerSensorLabel">Ubicacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <form id="formEditarSensor" enctype="multipart/form-data">
+                    <input type="hidden" id="verId" name="id">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="tipo" class="form-label">Tipo de Sensor</label>
+                                <select class="form-select" id="verTipo" name="tipo" required>
+                                    <option value="TEMPERATURA">Temperatura</option>
+                                    <option value="HUMEDAD">Humedad</option>
+                                    <option value="ACIDEZ">Acidez</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label ><strong>Descripcion:</strong></label>
+                                    <textarea class="form-control" id="verDescripcion" name="descripcion" ></textarea>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div> 
+                    
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label><strong>Ubicacion:</strong></label>
+                                    <select class="form-control" id="verUbicacion" name="ubicacion" required>
+                                        <option value="">Selecciona una Ubicacion</option>
+                                        {% for ubicacion in ubicaciones %}
+                                            <option value="{{ ubicacion.id }}">{{ ubicacion.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                    
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label ><strong>Fecha_Instalacion:</strong></label>
+                                    <input type="date" class="form-control" id="verFechaInstalacion" name="fecha_instalacion" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarDatosEditadosSensor()">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

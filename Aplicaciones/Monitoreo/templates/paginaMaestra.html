@@ -11,12 +11,10 @@
     <!--Importando CSS-->
     <link rel="stylesheet" href="{% static 'css/PaginaMaestra/paginaMaestra.css' %}">
     <link rel="stylesheet" href="{% static 'css/VistaNavegador/vistaNavegador.css' %}">
-    <link rel="stylesheet" href="{% static 'css/Empleado/empleado.css' %}">
-    <!-- Reporte -->
-    <link rel="stylesheet" href="{% static 'css/Reporte/reporte.css' %}">
+
     <!--CSS MODAL-->
     <link rel="stylesheet" href="{% static 'css/VistaNavegador/inicio.css' %}">
-    <link rel="stylesheet" href="{% static 'css/VistaNavegador/modalLogeo.css' %}">
+   
 
     <!--Importando jQuery-->
     <script src="{% static 'plantilla/js/core/jquery-3.7.1.min.js' %}"></script>
@@ -50,55 +48,31 @@
 </head>
 <body>
 
-    <!-- header -->
-    {% block header %}       
-        <!--Cabecera de la pagina-->
-        <header>
-            <div id="logoTipo">
-                <!--Logo DJANGO-->
-                <img src="{% static 'img/fondo.png' %}" alt="logo Django">
-                <h1>Controles de suelo en Cotopaxi</h1>
+
+    <!-- Encabezado sin usar <header> -->
+        <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <!-- Logo o Título -->
+                <h2 class="text-center text-white w-100">
+                    SISTEMA DE MONITOREO DE SUELOS
+                </h2>
             </div>
-        </header>
-        <!--BARRA NAVEGACION-->
-        <nav class="nav_principal">
-            <ul>
-                <li>
-                    <a href="{% url 'inicio' %}">Inicio</a>
-                </li>           
-                <li>
-                    <a id="btn_login" type="button" data-bs-toggle="modal" data-bs-target="#logeoModal">Login</a>
-                </li>
-                <li>
-                    <a  href="{% url 'registro' %}" id="btn_login" type="button">
-                        Registrarse
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!--EFECTO 3D-->
-        <div class="barra">
-            <span class="esquina-izquierda"></span>
-            <span class="relleno-barra"></span>
-            <span class="esquina-derecha"></span>
         </div>
-        <!--MODALES-->
-        {% include "Navegador/modalLogeo.html" %}
+        
+        
 
-    {% endblock header %}
-    
-    <div class="body-content mt-5">
-        {% block body %}
-            
-        {% endblock %}
-    </div>
-
+    {% block body %}
+        
+    {% endblock %}
+    <br><br><br><br><br><br><br><br><br>
     <!-- footer -->
     <footer class="footer mt-auto py-3 bg-dark text-white">
         <div class="container text-center">
             <h5>Proyecto realizado por:</h5>
             <ul class="list-inline">
                 <li class="list-inline-item"><strong>Aimacaña David</strong></li>
+                <li class="list-inline-item"><strong>Ante Romel</strong></li>
+                <li class="list-inline-item"><strong>Chiguano Victor</strong></li>
                 <li class="list-inline-item"><strong>Guanoluisa Katherine</strong></li>
                 <li class="list-inline-item"><strong>Porras Xavier</strong></li>
                 <li class="list-inline-item"><strong>Quintanilla Narcisa</strong></li>
@@ -107,19 +81,6 @@
         </div>
     </footer>
 
-    <!--JS MODAL-->
-    <script src="{% static 'js/Navegador/modalLogeo.js' %}"></script>
-
-    <!-- Bootstrap -->
-    <script src="{% static 'plantilla/js/core/popper.min.js' %}"></script>
-    <script src="{% static 'plantilla/js/core/bootstrap.min.js' %}"></script>
-    
-    <!-- Datatables -->
-    <script src="{% static 'plantilla/js/plugin/datatables/datatables.min.js' %}"></script>
-
-    <!--SWEETALERT-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <!-- MOSTRAR MENSAJES -->
     {% if messages %}
         {% for mensaje in messages %}
@@ -142,6 +103,20 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+
+    <!--JS ubicacion-->
+    
+    <!-- Bootstrap -->
+    <script src="{% static 'plantilla/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'plantilla/js/core/bootstrap.min.js' %}"></script>
+    
+    <!-- Datatables -->
+    <script src="{% static 'plantilla/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!--SWEETALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    
 </body>
 
 </html>
