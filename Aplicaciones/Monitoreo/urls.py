@@ -3,14 +3,24 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .Views.Navegador_views import vistaNavegador,inicio
 from .Views.Logeo_views import *
+from .Views.Ubicacion_views import *
+from .Views.Sensor_views import *
 
 urlpatterns = [
-    path('',inicio, name='inicio'),
     path('',vistaNavegador, name='vistaNavegador'),
-    # REGISTRO USUARIO
-    path('registro/',registro, name='registro'),
-    # LOGIN
-    path('iniciarSesion/',iniciarSesion,name='iniciarSesion'),
-    # LOGOUT
-    path('cerrarSesion/',cerrarSesion,name='cerrarSesion'),
+    
+    #UBICACION
+    path('vistaUbicacion/',vistaUbicacion,name='vistaUbicacion'),
+    path('registrar_ubicacion/', registrar_ubicacion, name='registrar_ubicacion'),
+    path('obtenerUbicacion/<int:ubicacion_id>/',obtenerUbicacion,name='obtenerUbicacion'),
+    path('editarUbicacion/<int:ubicacion_id>/',editarUbicacion,name='editarUbicacion'),
+    path('eliminarUbicacion/<int:ubicacion_id>/',eliminarUbicacion,name='eliminarUbicacion'),
+
+    #SENSOR
+    path('vistaSensor/',vistaSensor,name='vistaSensor'),
+    path('registrar_sensor/', registrar_sensor, name='registrar_sensor'),
+    path('obtenerSensor/<int:sensor_id>/',obtenerSensor,name='obtenerSensor'),
+    path('editarSensor/<int:sensor_id>/',editarSensor,name='editarSensor'),
+    path('eliminarSensor/<int:sensor_id>/',eliminarSensor,name='eliminarSensor'),
+
 ]
